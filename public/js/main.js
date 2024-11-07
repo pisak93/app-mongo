@@ -9,7 +9,7 @@ imprimirNombres();
 async function updateUsers(){
 
 
- var bd= await fetch("http://localhost:5000/getall")
+ var bd= await fetch("https://app-mongo-2.onrender.com/getall")
     .then(function(res){
          return res.json()
          })
