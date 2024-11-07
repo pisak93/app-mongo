@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/estilos.css">
+    <script src="js/main.js"></script>
+    
+<script src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet' />
+
+
+</head>
+<body>
+    <div id='map' style='width: 400px; height: 300px;'></div>
+    <button id="pos">Iniciar Mapa</button>
+
+    <div id="info"></div>
+<script>
+     var cord=[];
+      getLocation();
+
+
+ 
+
+
+const geojson = {
+  type: 'FeatureCollection',
+  features: [
+    {
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [-77.032, 38.913]
+      },
+      properties: {
+        title: 'Accidente',
+        description: 'Accidente un carro se estrelló con una moto, paso de cicloruta cerrado'
+      }
+    },
+    {
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [-122.414, 37.776]
+      },
+      properties: {
+        title: 'Mapbox',
+        description: 'San Francisco, California'
+      }
+    }
+  ]
+};
+
+
+
+  mapboxgl.accessToken = 'pk.eyJ1Ijoic21hcnF1ZXpwIiwiYSI6ImNtMm53bWcwNTA5dmQyam9ydjYyMGZoaHQifQ.23rOtdVQvn0pX4fapkhRVg';
+
+  function crearMapa(){
+    
+  }
+ 
+  var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/smarquezp/cm2nxzidt008t01qi5umb86hg',
+    center: [-96, 37.8],
+        zoom: 10,
+        projection:"mercator"
+  });
+
+ 
+
+document.getElementById("pos").addEventListener("click",iniciarMapa);
+
+function getLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(p){
+            console.log(p.coords);
+            var cordL=[ p.coords.longitude, p.coords.latitude];
+            console.log(cordL);
+           cord =cordL;
+          });
+        } else { 
+        
+        }
+      
+      }
+
+
+
+
+function iniciarMapa(){
+crearVarios();
+    console.log(cord);
+
+    map.flyTo({
+        center:cord
+    });
+}
+
+
+map.on('click', function(e) {
+
+        document.getElementById('info').innerHTML = JSON.stringify(e.lngLat.wrap());
+
+
+            const el = document.createElement('div');
+            el.className = 'marker';
+            new mapboxgl.Marker(el).setLngLat(e.lngLat).addTo(map); 
+        
+
+
+
+    });
+
+
+    function crearVarios(){
+
+
+    for (const feature of geojson.features) {
+  
+  const el = document.createElement('div');
+  el.className = 'marker';
+
+
+new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map); 
+
+}
+}
+
+    /*  function crearVarios(){
+    for (const feature of geojson.features) {
+  
+  const el = document.createElement('div');
+  el.className = 'marker';
+
+
+new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map); 
+
+}
+}*/
+  
+
+</script>
+
+</body>
+</html>
