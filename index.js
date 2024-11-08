@@ -60,7 +60,7 @@ app.post("/add",function(req,res){
     .then(function(doc){
 console.log("Ingresado: "+doc);
 //res.json({response:"success"});
-res.redirect("/");
+res.redirect("back");
     })
     .catch(function(err){
 console.log("ERROR: "+err);
