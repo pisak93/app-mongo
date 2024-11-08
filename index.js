@@ -59,9 +59,9 @@ app.post("/add",function(req,res){
     usuario.save()
     .then(function(doc){
 console.log("Ingresado: "+doc);
-//res.json({response:"success"});
+res.json({response:"success"});
 //res.redirect("back");
-        res.location(req.get("Referrer") || "/");
+      //  res.location(req.get("Referrer") || "/");
     })
     .catch(function(err){
 console.log("ERROR: "+err);
